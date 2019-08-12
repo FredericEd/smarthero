@@ -1,0 +1,105 @@
+<resources>
+    <string name="app_name">U Control</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="save">Guardar</string>
+    <string name="si">Sí</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancelar</string>
+    <string name="contact">Contactar</string>
+    <string name="back">Retornar</string>
+
+    <string name="menu_alarma">Crear alarma</string>
+    <string name="menu_logout">Cerrar sesión</string>
+    <string name="menu_map">U-Map</string>
+    <string name="menu_detect">U-Detect</string>
+    <string name="menu_profile">Perfil</string>
+    <string name="menu_recorrido">Recorrido Seguro</string>
+    <string name="menu_shared">Recorridos Compartidos</string>
+    <string name="menu_settings">Configuración</string>
+
+    <string name="error_general">Ha ocurrido un error inesperado.</string>
+    <string name="error_field_required">Este campo es requerido</string>
+    <string name="error_fields_required">Debe llenar todos los campos.</string>
+    <string name="error_invalid_email">El correo no es válido</string>
+    <string name="error_internet">Necesita una conexión a internet para acceder a esta funcionalidad.</string>
+    <string name="error_internet2">No se dectectó conexión a internet. Inténtelo de nuevo.</string>
+    <string name="error_password_mismatch">Las claves no concuerdan.</string>
+    <string name="error_birthday_required">Debe ingresar una fecha de nacimiento.</string>
+    <string name="error_image_required">Debe subir una imagen.</string>
+    <string name="error_phone_required">Debe ingresar un número de teléfono.</string>
+    <string name="error_date_future">La fecha de nacimiento no es válida.</string>
+    <string name="error_permissions">No autorizó los permisos.</string>
+    <string name="error_heavy">El archivo seleccionado es demasiado pesado.</string>
+
+    <string name="hint_email">Correo</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="hint_password2">Repetir contraseña</string>
+    <string name="hint_cedula">Cédula</string>
+    <string name="hint_phone">Teléfono celular</string>
+    <string name="hint_nombre">Nombre</string>
+    <string name="hint_nombre1">Primer nombre</string>
+    <string name="hint_nombre2">Segundo nombre (opcional)</string>
+    <string name="hint_apellido1">Primer apellido</string>
+    <string name="hint_apellido2">Segundo apellido</string>
+    <string name="hint_edad">Edad</string>
+    <string name="hint_nacimiento">Fecha de nacimiento</string>
+
+    <string name="home_message_alarma">¿Desea crear una alarma de seguridad? Se enviará su ubicación a los policías cercanos.</string>
+    <string name="home_message_logout">¿Está seguro de querer cerrar su sesión?</string>
+
+    <string name="consulta_label_header">Elija el método para escoger la imagen para la consulta. Asegúrese de mostrar el rostro de forma clara.</string>
+    <string name="consulta_message_usuario_added">Contacto agregado exitosamente</string>
+    <string name="consulta_message_usuario_required">Debe agregar al menos un contacto</string>
+
+    <string name="auth_button_login">Iniciar sesión</string>
+    <string name="auth_button_register">Registrarse</string>
+    <string name="auth_button_picture">Tomar foto</string>
+
+    <string name="profile_label_tab1">Información personal</string>
+    <string name="profile_label_tab2">U-Card</string>
+    <string name="profile_button_record">Ver record policial</string>
+    <string name="profile_label_edad">años</string>
+    <string name="profile_label_tipo">Tipo</string>
+    <string name="profile_label_observacion">Observacion</string>
+
+    <string name="recorrido_label_inicio">Punto de inicio</string>
+    <string name="recorrido_button_iniciar">Iniciar recorrido</string>
+    <string name="recorrido_button_finalizar">Finalizar</string>
+    <string name="recorrido_button_actualizar">Actualizar mapa</string>
+    <string name="recorrido_label_fecha">Fecha de inicio:</string>
+    <string name="recorrido_label_estado">Estado:</string>
+    <string name="recorrido_label_title_contactos">Contactos agregados</string>
+    <string name="recorrido_label_contactos">Agregue los contactos con los que quiera compartir su recorrido seguro.</string>
+    <string name="recorrido_button_contacto">Añadir contacto</string>
+    <string name="recorrido_message_finalizar">¿Desea finalizar su recorrido seguro?</string>
+    <string name="recorrido_label_title_bitacoras">Recorridos compartidas</string>
+    <string name="recorrido_label_empty">Aún no le han compartido recorridos seguros. Cuéntele a sus amigos y familiares sobre U-Control.</string>
+
+    <string name="FACEBOOK_APP_ID">344085996473440</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">fdf5d2ba405c3d6c463e5b3722f48e09</string>
+    <string name="title_activity_login2">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+    <string name="unknown_location">La ubicación no pudo obtenerse.</string>
+    <string name="channel_name">ulocation</string>
+    <string name="channel_description" >U-Control\'s default notification channel</string>
+    <string name="persistent_notification">U-Control está salvaguardando su ubicación.</string>
+    <plurals name="num_locations_reported">
+        <item quantity="zero">No location reported</item>
+        <item quantity="one">One location reported</item>
+        <item quantity="other">%d locations reported</item>
+    </plurals>
+</resources>

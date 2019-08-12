@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/contentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardElevation="3dp"
+                card_view:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/hint_nombre"/>
+
+                        <TextView
+                            android:id="@+id/textNombre"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_weight="2"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/hint_edad"/>
+
+                        <TextView
+                            android:id="@+id/textEdad"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_weight="2"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/hint_nacimiento"/>
+
+                        <TextView
+                            android:id="@+id/textNacimiento"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_weight="2"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/hint_email"/>
+
+                        <TextView
+                            android:id="@+id/textCorreo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_weight="2"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/hint_phone"/>
+
+                        <TextView
+                            android:id="@+id/textPhone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_weight="2"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnRecord"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/profile_button_record"
+                        android:layout_marginTop="20dp"
+                        android:textStyle="bold"
+                        android:background="@drawable/trading_button_effect"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/layHistorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardElevation="3dp"
+                card_view:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:background="@color/colorPrimary">
+
+                    <TextView
+                        android:id="@+id/textTipo"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/profile_label_tipo"
+                        android:textColor="@color/white"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textDetalle"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/profile_label_observacion"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/back"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:background="@drawable/trading_button_effect"/>
+
+        </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>

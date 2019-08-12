@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".LoginActivity" android:background="@color/colorPrimary">
+
+
+    <ScrollView
+            android:id="@+id/contentView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/logo"
+                    android:layout_gravity="center"
+                    android:padding="10dp" />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/editEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_email"
+                        android:textColor="@color/white"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:maxLength="100"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/editPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_password"
+                        android:textColor="@color/white"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:maxLength="50"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auth_button_login"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/trading_button_effect2"
+                    android:onClick="attemptLogin"/>
+
+                <Button
+                    android:id="@+id/btnRegistro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auth_button_register"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/trading_button_effect"
+                    android:onClick="createAccount"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ProgressBar
+            android:id="@+id/progressView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+</RelativeLayout>
