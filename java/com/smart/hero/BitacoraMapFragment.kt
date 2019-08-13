@@ -106,18 +106,23 @@ class BitacoraMapFragment: Fragment(), OnMapReadyCallback {
         try {
             val locationResult = mFusedLocationProviderClient.lastLocation
             locationResult.addOnCompleteListener{
-                if (it.isSuccessful) {
-                    // Set the map's camera position to the current location of the device.
-                    val mLastKnownLocation = it.result
-                    prefs.edit().putString("latitud", mLastKnownLocation!!.latitude.toString()).apply()
-                    prefs.edit().putString("longitud", mLastKnownLocation.longitude.toString()).apply()
-                    currentLoc = LatLng(
-                        mLastKnownLocation!!.latitude,
-                        mLastKnownLocation.longitude
-                    )
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, DEFAULT_ZOOM))
-                } else {
-                    Log.d("ERROR", "Current location is null. Using defaults.")
+                try {
+                    if (it.isSuccessful) {
+                        // Set the map's camera position to the current location of the device.
+                        val mLastKnownLocation = it.result
+                        prefs.edit().putString("latitud", mLastKnownLocation!!.latitude.toString()).apply()
+                        prefs.edit().putString("longitud", mLastKnownLocation.longitude.toString()).apply()
+                        currentLoc = LatLng(
+                            mLastKnownLocation!!.latitude,
+                            mLastKnownLocation.longitude
+                        )
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, DEFAULT_ZOOM))
+                    } else {
+                        Log.d("ERROR", "Current location is null. Using defaults.")
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Toast.makeText(activity, R.string.error_location, Toast.LENGTH_LONG).show()
                 }
             }
         } catch (e: SecurityException) {
@@ -156,9 +161,13 @@ class BitacoraMapFragment: Fragment(), OnMapReadyCallback {
         registros.forEach{
             points.add(LatLng(it.string("latitud")!!.toDouble(), it.string("longitud")!!.toDouble()))
         }
-        mMap.addMarker(MarkerOptions().position(LatLng(registros[0].string("latitud")!!.toDouble(), registros[0].string("longitud")!!.toDouble())).title(getString(R.string.recorrido_label_inicio)))
+        mMap.addMarker(MarkerOptions().position(LatLng(
+            registros[0].string("latitud")!!.toDouble(),
+            registros[0].string("longitud")!!.toDouble())).title(getString(R.string.recorrido_label_inicio) + " (" + registros[0].string("fecha") + ")"))
         if (registros.size > 1) {
-            mMap.addMarker(MarkerOptions().position(LatLng(registros[registros.lastIndex].string("latitud")!!.toDouble(), registros[registros.lastIndex].string("longitud")!!.toDouble())).title(getString(R.string.recorrido_label_inicio)))
+            mMap.addMarker(MarkerOptions().position(LatLng(
+                registros[registros.lastIndex].string("latitud")!!.toDouble(),
+                registros[registros.lastIndex].string("longitud")!!.toDouble())).title(getString(R.string.recorrido_label_final) + " (" + registros[registros.lastIndex].string("fecha") + ")"))
         }
         lineOptions.addAll(points)
         lineOptions.width(10.toFloat())

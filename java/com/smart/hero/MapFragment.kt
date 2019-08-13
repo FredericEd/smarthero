@@ -78,21 +78,26 @@ class MapFragment: Fragment(), OnMapReadyCallback {
         try {
             val locationResult = mFusedLocationProviderClient.lastLocation
             locationResult.addOnCompleteListener{
-                if (it.isSuccessful) {
-                    // Set the map's camera position to the current location of the device.
-                    val mLastKnownLocation = it.result
-                    prefs.edit().putString("latitud", mLastKnownLocation!!.latitude.toString()).apply()
-                    prefs.edit().putString("longitud", mLastKnownLocation.longitude.toString()).apply()
-                    currentLoc = LatLng(
-                        mLastKnownLocation!!.latitude,
-                        mLastKnownLocation.longitude
-                    )
-                    mMap.moveCamera(
-                        CameraUpdateFactory.newLatLngZoom(currentLoc, DEFAULT_ZOOM)
-                    )
-                    loadPolicias()
-                } else {
-                    Log.d("ERROR", "Current location is null. Using defaults.")
+                try {
+                    if (it.isSuccessful) {
+                        // Set the map's camera position to the current location of the device.
+                        val mLastKnownLocation = it.result
+                        prefs.edit().putString("latitud", mLastKnownLocation!!.latitude.toString()).apply()
+                        prefs.edit().putString("longitud", mLastKnownLocation.longitude.toString()).apply()
+                        currentLoc = LatLng(
+                            mLastKnownLocation!!.latitude,
+                            mLastKnownLocation.longitude
+                        )
+                        mMap.moveCamera(
+                            CameraUpdateFactory.newLatLngZoom(currentLoc, DEFAULT_ZOOM)
+                        )
+                        loadPolicias()
+                    } else {
+                        Log.d("ERROR", "Current location is null. Using defaults.")
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Toast.makeText(activity, R.string.error_location, Toast.LENGTH_LONG).show()
                 }
             }
         } catch (e: SecurityException) {

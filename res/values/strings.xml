@@ -24,6 +24,7 @@
     <string name="menu_settings">Configuración</string>
 
     <string name="error_general">Ha ocurrido un error inesperado.</string>
+    <string name="error_location">Ha ocurrido un error al obtener su ubicación. Asegúrese de haber activado la geolocalización.</string>
     <string name="error_field_required">Este campo es requerido</string>
     <string name="error_fields_required">Debe llenar todos los campos.</string>
     <string name="error_invalid_email">El correo no es válido</string>
@@ -58,6 +59,7 @@
     <string name="consulta_message_usuario_required">Debe agregar al menos un contacto</string>
 
     <string name="auth_button_login">Iniciar sesión</string>
+    <string name="auth_button_foto">Iniciar sesión con foto</string>
     <string name="auth_button_register">Registrarse</string>
     <string name="auth_button_picture">Tomar foto</string>
 
@@ -68,7 +70,8 @@
     <string name="profile_label_tipo">Tipo</string>
     <string name="profile_label_observacion">Observacion</string>
 
-    <string name="recorrido_label_inicio">Punto de inicio</string>
+    <string name="recorrido_label_inicio">Punto inicial</string>
+    <string name="recorrido_label_final">Ultimo punto</string>
     <string name="recorrido_button_iniciar">Iniciar recorrido</string>
     <string name="recorrido_button_finalizar">Finalizar</string>
     <string name="recorrido_button_actualizar">Actualizar mapa</string>

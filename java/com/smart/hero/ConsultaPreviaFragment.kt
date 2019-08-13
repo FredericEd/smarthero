@@ -2,6 +2,7 @@ package com.smart.hero
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ class ConsultaPreviaFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.wtf("response", arguments!!.getString("EXTRA1"))
         val json: JsonObject = Parser.default().parse(StringBuilder(arguments!!.getString("EXTRA1"))) as JsonObject
         val datos: JsonObject = json.obj("consultas")!!.obj("especial")!!
         textNombre.text = "${datos["nombre1"]} ${datos["apellido1"]}"

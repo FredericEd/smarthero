@@ -362,12 +362,17 @@ class ContactosFragment: Fragment(), ContactUIObserver{
             val mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
             val locationResult = mFusedLocationProviderClient.lastLocation
             locationResult.addOnCompleteListener{
-                if (it.isSuccessful) {
-                    val mLastKnownLocation = it.result
-                    prefs.edit().putString("latitud", mLastKnownLocation!!.latitude.toString()).apply()
-                    prefs.edit().putString("longitud", mLastKnownLocation.longitude.toString()).apply()
-                } else {
-                    Log.d("ERROR", "Current location is null. Using defaults.")
+                try {
+                    if (it.isSuccessful) {
+                        val mLastKnownLocation = it.result
+                        prefs.edit().putString("latitud", mLastKnownLocation!!.latitude.toString()).apply()
+                        prefs.edit().putString("longitud", mLastKnownLocation.longitude.toString()).apply()
+                    } else {
+                        Log.d("ERROR", "Current location is null. Using defaults.")
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Toast.makeText(activity, R.string.error_location, Toast.LENGTH_LONG).show()
                 }
             }
         } catch (e: SecurityException) {

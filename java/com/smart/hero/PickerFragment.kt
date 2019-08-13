@@ -74,7 +74,7 @@ class PickerFragment: Fragment() {
         }
         imgCamera.setOnClickListener{
             Dexter.withActivity(activity)
-                .withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
                 .withListener(object: MultiplePermissionsListener {
                     override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                         // check if all permissions are granted
@@ -153,8 +153,8 @@ class PickerFragment: Fragment() {
             progressView.visibility = View.VISIBLE
             contentView.visibility = View.GONE
             val queue = Volley.newRequestQueue(activity)
-            var URL = "${Utils.URL_SERVER}/consultas/ejemplo"
-            val stringRequest = object : StringRequest(Request.Method.POST, URL, Response.Listener<String> { response ->
+            var URL = "${Utils.URL_SERVER}/consultas"
+            val stringRequest = object : StringRequest(Method.POST, URL, Response.Listener<String> { response ->
                 if (isAdded) {
                     try {
                         progressView.visibility = View.GONE
@@ -193,8 +193,8 @@ class PickerFragment: Fragment() {
 
                 override fun getParams(): MutableMap<String, String> {
                     val parameters = HashMap<String, String>()
-                    parameters["latitud"] = "45634"//prefs.getString("latitud", "")!!
-                    parameters["longitud"] = "43545765"//prefs.getString("longitud", "")!!
+                    parameters["latitud"] =prefs.getString("latitud", "")!!
+                    parameters["longitud"] = prefs.getString("longitud", "")!!
                     parameters["imagen"] = imagen
                     return parameters
                 }

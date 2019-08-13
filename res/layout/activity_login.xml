@@ -85,6 +85,17 @@
                     android:onClick="attemptLogin"/>
 
                 <Button
+                    android:id="@+id/btnLoginFoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auth_button_foto"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/trading_button_effect2"
+                    android:onClick="dispatchTakePictureIntent"/>
+
+                <Button
                     android:id="@+id/btnRegistro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
