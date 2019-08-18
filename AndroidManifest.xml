@@ -79,6 +79,14 @@
             android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
 
         <service
+            android:name=".Utils.HeroMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service
             android:name="com.smart.hero.Utils.LocationUpdatesIntentService"
             android:exported="false" />
 

@@ -56,7 +56,7 @@ class BitacoraHolder(val UIObserver: BitacorasUIObserver, val view: View): Recyc
         val usuario = Klaxon().parseFromJsonObject<User>(bitacora.obj("usuario")!!)!!
         textNombre.text = "${usuario.nombre1} ${usuario.apellido1} ${usuario.apellido2}"
         textFecha.text = bitacora.string("fecha_inicio")
-        textEstado.text = if (bitacora.string("fecha_fin") == "") "EN CURSO" else "FINALIZADO"
+        textEstado.text = if (bitacora.string("fecha_fin") == "") "En curso" else "Finalizado"
         if (usuario.imagen.isNotEmpty())
             Picasso.get().load(Utils.URL_MEDIA + usuario.imagen).error(R.drawable.men).placeholder(R.drawable.men).noFade().into(imgIcon)
         view.setOnClickListener{

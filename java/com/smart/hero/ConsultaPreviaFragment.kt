@@ -43,5 +43,9 @@ class ConsultaPreviaFragment: Fragment() {
             fragment.arguments = bundle
             fragmentManager!!.beginTransaction().replace(R.id.frame_container, fragment).commit()
         }
+        btnCrear.setOnClickListener {
+            val fragment = ConsultaCrearFragment()
+            fragmentManager!!.beginTransaction().replace(R.id.frame_container, fragment).commit()
+        }
     }
 }

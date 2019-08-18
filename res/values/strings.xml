@@ -33,6 +33,7 @@
     <string name="error_password_mismatch">Las claves no concuerdan.</string>
     <string name="error_birthday_required">Debe ingresar una fecha de nacimiento.</string>
     <string name="error_image_required">Debe subir una imagen.</string>
+    <string name="error_image_least_required">Debe subir al menos una imagen.</string>
     <string name="error_phone_required">Debe ingresar un número de teléfono.</string>
     <string name="error_date_future">La fecha de nacimiento no es válida.</string>
     <string name="error_permissions">No autorizó los permisos.</string>
@@ -50,6 +51,7 @@
     <string name="hint_apellido2">Segundo apellido</string>
     <string name="hint_edad">Edad</string>
     <string name="hint_nacimiento">Fecha de nacimiento</string>
+    <string name="hint_detalles">Detalles de la denuncia</string>
 
     <string name="home_message_alarma">¿Desea crear una alarma de seguridad? Se enviará su ubicación a los policías cercanos.</string>
     <string name="home_message_logout">¿Está seguro de querer cerrar su sesión?</string>
@@ -57,6 +59,9 @@
     <string name="consulta_label_header">Elija el método para escoger la imagen para la consulta. Asegúrese de mostrar el rostro de forma clara.</string>
     <string name="consulta_message_usuario_added">Contacto agregado exitosamente</string>
     <string name="consulta_message_usuario_required">Debe agregar al menos un contacto</string>
+    <string name="consulta_button_record">Subir una denuncia</string>
+    <string name="consulta_message_record">¿Desea crear una nueva denuncia?</string>
+    <string name="consulta_label_fotos">Adjunte las fotos que servirán como evidencia a la denuncia (máximo 4):</string>
 
     <string name="auth_button_login">Iniciar sesión</string>
     <string name="auth_button_foto">Iniciar sesión con foto</string>
@@ -81,7 +86,7 @@
     <string name="recorrido_label_contactos">Agregue los contactos con los que quiera compartir su recorrido seguro.</string>
     <string name="recorrido_button_contacto">Añadir contacto</string>
     <string name="recorrido_message_finalizar">¿Desea finalizar su recorrido seguro?</string>
-    <string name="recorrido_label_title_bitacoras">Recorridos compartidas</string>
+    <string name="recorrido_label_title_bitacoras">Recorridos compartidos</string>
     <string name="recorrido_label_empty">Aún no le han compartido recorridos seguros. Cuéntele a sus amigos y familiares sobre U-Control.</string>
 
     <string name="FACEBOOK_APP_ID">344085996473440</string>
@@ -100,6 +105,7 @@
     <string name="channel_name">ulocation</string>
     <string name="channel_description" >U-Control\'s default notification channel</string>
     <string name="persistent_notification">U-Control está salvaguardando su ubicación.</string>
+    <string name="default_notification_channel_id" translatable="false">ucontrol_default_channel</string>
     <plurals name="num_locations_reported">
         <item quantity="zero">No location reported</item>
         <item quantity="one">One location reported</item>

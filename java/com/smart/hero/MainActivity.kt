@@ -37,6 +37,8 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.smart.hero.Utils.*
 import com.smart.hero.Utils.LocationRequestHelper
 import com.smart.hero.data.model.User
@@ -79,6 +81,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         onNavigationItemSelected(navView.menu.getItem(0))
         setBottomBar()
         buildGoogleApiClient()
+
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener{ task ->
+            if (!task.isSuccessful) {
+                Log.wtf("ERROR", "getInstanceId failed", task.exception)
+            }
+            val token = task.result?.token
+            sendRegistrationToServer(token)
+        }
+        FirebaseMessaging.getInstance().subscribeToTopic(getString(R.string.default_notification_channel_id))
     }
 
     override fun onConnected(@Nullable bundle: Bundle?) {
@@ -179,6 +190,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val anonymousFragment = supportFragmentManager.findFragmentById(R.id.frame_container)
             if (anonymousFragment is MapFragment) {
                 super.onBackPressed()
+            } else if (anonymousFragment is ConsultaPreviaFragment || anonymousFragment is ConsultaFragment) {
+                val fragment = PickerFragment()
+                val fragmentManager = supportFragmentManager
+                fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit()
             } else {
                 val intent = intent
                 finish()
@@ -303,6 +318,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val parameters = HashMap<String, String>()
                     parameters["latitud"] = prefs.getString("latitud", "")!!
                     parameters["longitud"] = prefs.getString("longitud", "")!!
+                    return parameters
+                }
+            }
+            stringRequest.retryPolicy = DefaultRetryPolicy(180000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+            queue.add(stringRequest)
+        }
+    }
+
+    private fun sendRegistrationToServer(token: String?) {
+        if (NetworkUtils.isConnected(applicationContext)) {
+            val queue = Volley.newRequestQueue(applicationContext)
+            val stringRequest = object : StringRequest(Method.POST, "${Utils.URL_SERVER}/usuarios/token",
+                Response.Listener<String> { response ->
+                    Log.i("SUCCESS", response)
+                }, Response.ErrorListener { error ->
+                    error.printStackTrace()
+                }
+            ) {
+                override fun getHeaders(): MutableMap<String, String> {
+                    val headers = HashMap<String, String>()
+                    headers.put("token", prefs.getString("api_key", "")!!)
+                    return headers
+                }
+
+                override fun getParams(): MutableMap<String, String> {
+                    val parameters = HashMap<String, String>()
+                    parameters["token"] = token!!
+                    Log.i("token", token)
                     return parameters
                 }
             }

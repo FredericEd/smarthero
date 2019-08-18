@@ -100,16 +100,13 @@ class LoginActivity : AppCompatActivity() {
                 try {
                     val json: JsonObject = Parser.default().parse(StringBuilder(response)) as JsonObject
                     val result = Klaxon().parseFromJsonObject<User>(json.obj("usuario")!!)
-                    /*val json = JSONObject(response)
-                    val data = json.getJSONObject("usuario")
-                    val user = User(data)*/
                     prefs.edit().putString("usuario", Klaxon().toJsonString(result)).apply()
                     prefs.edit().putString("api_key", json.obj("usuario")!!.string("api_key")).apply()
                     prefs.edit().putString("latitud", "-2.1925725").apply()
                     prefs.edit().putString("longitud", "-79.8803836").apply()
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
-                } catch (e: JSONException) {
+                } catch (e: Exception) {
                     progressView.visibility = View.GONE
                     contentView.visibility = View.VISIBLE
                     e.printStackTrace()

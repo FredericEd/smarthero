@@ -1,6 +1,7 @@
 package com.smart.hero
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.AssetFileDescriptor
@@ -96,10 +97,12 @@ class PickerFragment: Fragment() {
     }
 
     private fun openGallery() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.type = "image/*"
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_GET_SINGLE_FILE)
+        Intent(Intent.ACTION_GET_CONTENT).also {galleryIntent ->
+            galleryIntent.type = "image/*"
+            galleryIntent.addCategory(Intent.CATEGORY_OPENABLE).also {
+                startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), REQUEST_GET_SINGLE_FILE)
+            }
+        }
     }
 
     private fun dispatchTakePictureIntent() {
@@ -175,11 +178,17 @@ class PickerFragment: Fragment() {
                         error.printStackTrace()
                         progressView.visibility = View.GONE
                         contentView.visibility = View.VISIBLE
-                        Toast.makeText(
-                            activity,
-                            JSONObject(String(error.networkResponse.data)).getString("message"),
-                            Toast.LENGTH_LONG
-                        ).show()
+                        val builder = AlertDialog.Builder(context)
+                        builder.setTitle(getString(R.string.app_name)).setMessage(JSONObject(String(error.networkResponse.data)).getString("message") + " " + getString(R.string.consulta_message_record))
+                            .setCancelable(false)
+                            .setPositiveButton(getString(R.string.si)) { dialog, _ ->
+                                dialog.cancel()
+                                val fragment = ConsultaCrearFragment()
+                                fragmentManager!!.beginTransaction().replace(R.id.frame_container, fragment).commit()
+                            }
+                            .setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.cancel() }
+                        val alert = builder.create()
+                        alert.show()
                     } catch (e: Exception) {
                         Toast.makeText(activity, resources.getString(R.string.error_general), Toast.LENGTH_LONG).show()
                     }

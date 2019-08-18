@@ -116,7 +116,6 @@ class BitacoraMapFragment: Fragment(), OnMapReadyCallback {
                             mLastKnownLocation!!.latitude,
                             mLastKnownLocation.longitude
                         )
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, DEFAULT_ZOOM))
                     } else {
                         Log.d("ERROR", "Current location is null. Using defaults.")
                     }
@@ -161,6 +160,9 @@ class BitacoraMapFragment: Fragment(), OnMapReadyCallback {
         registros.forEach{
             points.add(LatLng(it.string("latitud")!!.toDouble(), it.string("longitud")!!.toDouble()))
         }
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(
+            registros[0].string("latitud")!!.toDouble(),
+            registros[0].string("longitud")!!.toDouble()), DEFAULT_ZOOM))
         mMap.addMarker(MarkerOptions().position(LatLng(
             registros[0].string("latitud")!!.toDouble(),
             registros[0].string("longitud")!!.toDouble())).title(getString(R.string.recorrido_label_inicio) + " (" + registros[0].string("fecha") + ")"))
