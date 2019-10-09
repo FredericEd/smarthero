@@ -27,6 +27,9 @@ import androidx.annotation.Nullable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
@@ -48,6 +51,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.fragment_picker.*
 import org.json.JSONObject
 import java.util.HashMap
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -97,22 +101,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun requestLocationUpdates() {
-        try {
+       /* try {
             Log.i(MainActivity::class.java.simpleName, "Starting location updates")
             LocationRequestHelper.setRequesting(this, true)
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, getPendingIntent())
+
+            val locationWorker = PeriodicWorkRequestBuilder<LocationWorker>( 15, TimeUnit.MINUTES).addTag("LOCATION_WORK_TAG").build()
+            WorkManager.getInstance().enqueueUniquePeriodicWork( "LOCATION_WORK_TAG", ExistingPeriodicWorkPolicy.KEEP, locationWorker)
         } catch (e: SecurityException) {
             LocationRequestHelper.setRequesting(this, false)
             e.printStackTrace()
-        }
+        }*/
     }
 
     fun removeLocationUpdates() {
-        Log.i(MainActivity::class.java.simpleName, "Ending location updates")
-        LocationRequestHelper.setRequesting(this, false);
+       /* Log.i(MainActivity::class.java.simpleName, "Ending location updates")
+        LocationRequestHelper.setRequesting(this, false)
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, getPendingIntent())
         val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         mNotificationManager.cancelAll()
+
+        WorkManager.getInstance().cancelAllWorkByTag("LOCATION_WORK_TAG")*/
     }
 
     override fun onConnectionSuspended(i: Int) {
@@ -147,8 +156,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun getPendingIntent(): PendingIntent {
-        val intent: Intent = Intent(this@MainActivity, LocationUpdatesBroadcastReceiver::class.java)
-        intent.setAction(LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES)
+        val intent = Intent(this@MainActivity, LocationUpdatesBroadcastReceiver::class.java)
+        intent.action = LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES
         return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
@@ -190,10 +199,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val anonymousFragment = supportFragmentManager.findFragmentById(R.id.frame_container)
             if (anonymousFragment is MapFragment) {
                 super.onBackPressed()
-            } else if (anonymousFragment is ConsultaPreviaFragment || anonymousFragment is ConsultaFragment) {
+            } else if (anonymousFragment is ConsultaPreviaFragment) {
                 val fragment = PickerFragment()
                 val fragmentManager = supportFragmentManager
                 fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit()
+            } else if (anonymousFragment is ConsultaFragment) {
+                val fragment = anonymousFragment as ConsultaFragment
+                fragment.onBackPressed()
             } else {
                 val intent = intent
                 finish()
@@ -284,7 +296,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit()
         } else Log.e("MainActivity", "Error in creating fragment")
     }
-
 
     private fun saveAlarma() {
         if (!NetworkUtils.isConnected(applicationContext)) {

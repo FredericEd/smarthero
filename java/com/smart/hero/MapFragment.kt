@@ -17,6 +17,8 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.beust.klaxon.JsonObject
+import com.beust.klaxon.Parser
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -35,6 +37,7 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.smart.hero.Utils.InfoWindowPolice
 import com.smart.hero.Utils.NetworkUtils
 import com.smart.hero.Utils.Utils
+import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.android.synthetic.main.fragment_picker.contentView
 import kotlinx.android.synthetic.main.fragment_picker.progressView
 import org.json.JSONArray
@@ -72,6 +75,10 @@ class MapFragment: Fragment(), OnMapReadyCallback {
         }
         childFragmentManager.beginTransaction().replace(R.id.map, mapFragment as Fragment).commit()
         mapFragment!!.getMapAsync(this)
+
+        reloadButton.setOnClickListener{
+            saveLocation()
+        }
     }
 
     private fun getDeviceLocation() {
@@ -198,5 +205,40 @@ class MapFragment: Fragment(), OnMapReadyCallback {
             stringRequest.retryPolicy = DefaultRetryPolicy(180000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
             queue.add(stringRequest)
         }
+    }
+
+    private fun saveLocation() {
+        if (NetworkUtils.isConnected(activity!!.applicationContext)) {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(activity!!.applicationContext)
+            val queue = Volley.newRequestQueue(activity!!.applicationContext)
+            var URL = "${Utils.URL_SERVER}/usuarios/location"
+            val stringRequest = object : StringRequest(Method.POST, URL, Response.Listener<String> { response ->
+                try {
+                    Log.e("respuesta", response)
+                    val json: JsonObject = Parser.default().parse(StringBuilder(response)) as JsonObject
+                    Toast.makeText(activity!!.applicationContext, json.string("message"), Toast.LENGTH_LONG).show()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }, Response.ErrorListener { error ->
+                error.printStackTrace()
+                Toast.makeText(activity, JSONObject(String(error.networkResponse.data)).getString("message"), Toast.LENGTH_LONG).show()
+            }) {
+                override fun getHeaders(): MutableMap<String, String> {
+                    val headers = HashMap<String, String>()
+                    headers.put("token", prefs.getString("api_key", "")!!)
+                    return headers
+                }
+
+                override fun getParams(): MutableMap<String, String> {
+                    val parameters = HashMap<String, String>()
+                    parameters["latitud"] = prefs.getString("latitud", "")!!
+                    parameters["longitud"] = prefs.getString("longitud", "")!!
+                    return parameters
+                }
+            }
+            stringRequest.retryPolicy = DefaultRetryPolicy(180000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+            queue.add(stringRequest)
+        } else Toast.makeText(activity, R.string.error_internet, Toast.LENGTH_LONG).show()
     }
 }

@@ -84,9 +84,8 @@ class BitacoraMapFragment: Fragment(), OnMapReadyCallback {
         }
         childFragmentManager.beginTransaction().replace(R.id.map, mapFragment as Fragment).commit()
         mapFragment!!.getMapAsync(this)
-        loadBitacora(id_bitacora)
         btnActualizar.setOnClickListener {
-            loadBitacora(id_bitacora)
+            saveRegistro(id_bitacora)
         }
         btnSubmit.setOnClickListener {
             val builder = AlertDialog.Builder(context)
@@ -149,6 +148,7 @@ class BitacoraMapFragment: Fragment(), OnMapReadyCallback {
                 withErrorListener{ Toast.makeText(activity, R.string.error_permissions, Toast.LENGTH_SHORT).show()}
             .onSameThread()
             .check()
+        loadBitacora(id_bitacora)
     }
 
     private fun setRouteBetweenMarkers(registros: JsonArray<JsonObject>){
@@ -261,6 +261,46 @@ class BitacoraMapFragment: Fragment(), OnMapReadyCallback {
                         Toast.makeText(activity, resources.getString(R.string.error_general), Toast.LENGTH_LONG).show()
                     }
                 }
+            }) {
+                override fun getHeaders(): MutableMap<String, String> {
+                    val headers = HashMap<String, String>()
+                    headers.put("token", prefs.getString("api_key", "")!!)
+                    return headers
+                }
+
+                override fun getParams(): MutableMap<String, String> {
+                    val parameters = HashMap<String, String>()
+                    parameters["latitud"] = prefs.getString("latitud", "")!!
+                    parameters["longitud"] = prefs.getString("longitud", "")!!
+                    return parameters
+                }
+            }
+            stringRequest.retryPolicy = DefaultRetryPolicy(180000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+            queue.add(stringRequest)
+        }
+    }
+
+    private fun saveRegistro(id_bitacora: String) {
+        if (NetworkUtils.isConnected(activity!!.applicationContext)) {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(activity!!.applicationContext)
+            val queue = Volley.newRequestQueue(activity!!.applicationContext)
+            var URL = "${Utils.URL_SERVER}/bitacoras/$id_bitacora/registros"
+            val stringRequest = object : StringRequest(Method.POST, URL, Response.Listener<String> { response ->
+                try {
+                    Log.e("respuesta", response)
+                    loadBitacora(id_bitacora)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                } finally {
+                    /*screenWakeLock?.let{
+                        if (screenWakeLock.isHeld()) screenWakeLock.release()
+                    }*/
+                }
+            }, Response.ErrorListener { error ->
+                error.printStackTrace()
+                /*screenWakeLock?.let{
+                    if (screenWakeLock.isHeld()) screenWakeLock.release()
+                }*/
             }) {
                 override fun getHeaders(): MutableMap<String, String> {
                     val headers = HashMap<String, String>()

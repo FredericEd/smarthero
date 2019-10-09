@@ -92,13 +92,13 @@ internal class LocationResultHelper(private val mContext: Context, private val m
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext)
         prefs.edit().putString("latitud", mLocations[mLocations.lastIndex]!!.latitude.toString()).apply()
         prefs.edit().putString("longitud", mLocations[mLocations.lastIndex]!!.longitude.toString()).apply()
-        PreferenceManager.getDefaultSharedPreferences(mContext)
+        /*PreferenceManager.getDefaultSharedPreferences(mContext)
             .edit()
             .putString(
                 KEY_LOCATION_UPDATES_RESULT, locationResultTitle + "\n" +
                         locationResultText
             )
-            .apply()
+            .apply()*/
         saveRegistro(mLocations[mLocations.lastIndex]!!.latitude.toString(), mLocations[mLocations.lastIndex]!!.longitude.toString())
     }
 
@@ -152,7 +152,7 @@ internal class LocationResultHelper(private val mContext: Context, private val m
             var URL = "${Utils.URL_SERVER}/bitacoras/${prefs.getString("id_bitacora", "")!!}/registros"
             val stringRequest = object : StringRequest(Method.POST, URL, Response.Listener<String> { response ->
                 try {
-                    Log.wtf("respuesta", response)
+                    Log.e("respuesta", response)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

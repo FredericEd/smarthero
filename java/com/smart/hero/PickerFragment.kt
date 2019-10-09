@@ -2,6 +2,7 @@ package com.smart.hero
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.AssetFileDescriptor
@@ -52,6 +53,7 @@ class PickerFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefs = PreferenceManager.getDefaultSharedPreferences(activity!!.applicationContext)
+
         imgGallery.setOnClickListener{
             Dexter.withActivity(activity)
                 .withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)

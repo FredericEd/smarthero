@@ -146,12 +146,12 @@ class ContactosFragment: Fragment(), ContactUIObserver{
                             progressView.visibility = View.GONE
                             contentView.visibility = View.VISIBLE
                             swipeRefreshLayout.isRefreshing = false
-                            Log.wtf("response", response)
+                            Log.e("response", response)
                             val json: JsonObject = Parser.default().parse(StringBuilder(response)) as JsonObject
                             val contactos = json.array<JsonObject>("contactos")
                             contactos!!.forEach{
                                 try {
-                                    val single = Klaxon().parseFromJsonObject<User>(it.obj("contacto")!!)
+                                    val single = Klaxon().parseFromJsonObject<User>(it.obj("usuario")!!)
                                     contactosList.add(single!!)
                                 } catch (e: java.lang.Exception) {
                                     e.printStackTrace()

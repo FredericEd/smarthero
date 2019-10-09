@@ -1,6 +1,8 @@
 package com.smart.hero
 
 import android.Manifest
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.AssetFileDescriptor
@@ -59,6 +61,18 @@ class ConsultaCrearFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefs = PreferenceManager.getDefaultSharedPreferences(activity!!.applicationContext)
+
+
+        val dialogBuilder = AlertDialog.Builder(context)
+        val inflater = this.layoutInflater
+        val dialogView = inflater.inflate(R.layout.fragment_tuto, null)
+        dialogBuilder.setView(dialogView)
+        dialogBuilder.setPositiveButton(getString(R.string.ok), object : DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface, id: Int) {  }
+        })
+
+        val alertDialog = dialogBuilder.create()
+        alertDialog.show()
         img1.setOnClickListener{
             imgChosen = img1
             positionChosen = 0

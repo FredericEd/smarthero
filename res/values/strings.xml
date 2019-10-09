@@ -10,6 +10,7 @@
     <string name="save">Guardar</string>
     <string name="si">Sí</string>
     <string name="no">No</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancelar</string>
     <string name="contact">Contactar</string>
     <string name="back">Retornar</string>
@@ -38,6 +39,7 @@
     <string name="error_date_future">La fecha de nacimiento no es válida.</string>
     <string name="error_permissions">No autorizó los permisos.</string>
     <string name="error_heavy">El archivo seleccionado es demasiado pesado.</string>
+    <string name="error_terms">Debe aceptar los términos y condiciones.</string>
 
     <string name="hint_email">Correo</string>
     <string name="hint_password">Contraseña</string>
@@ -62,11 +64,15 @@
     <string name="consulta_button_record">Subir una denuncia</string>
     <string name="consulta_message_record">¿Desea crear una nueva denuncia?</string>
     <string name="consulta_label_fotos">Adjunte las fotos que servirán como evidencia a la denuncia (máximo 4):</string>
+    <string name="consulta_message_alarma">La persona tiene registros en su record policial. ¿Desea crear una alarma de seguridad?</string>
+    <string name="consulta_label_tuto_title">ADJUNTAR LA EVIDENCIA</string>
+    <string name="consulta_label_tuto_text">Debe tomar la foto de la denuncia que desee reportar. Las secciones que deben salir bien en la foto son: número de denuncia y datos del denunciado.</string>
 
     <string name="auth_button_login">Iniciar sesión</string>
     <string name="auth_button_foto">Iniciar sesión con foto</string>
     <string name="auth_button_register">Registrarse</string>
     <string name="auth_button_picture">Tomar foto</string>
+    <string name="auth_label_terms">Debe aceptar los términos y condiciones (Click para visualizar).</string>
 
     <string name="profile_label_tab1">Información personal</string>
     <string name="profile_label_tab2">U-Card</string>

@@ -15,12 +15,9 @@ class LocationUpdatesIntentService : IntentService(TAG) {
                 if (result != null) {
                     val locations = result.locations
                     val locationResultHelper = LocationResultHelper(
-                        this,
-                        locations
+                        this, locations
                     )
-                    // Save the location data to SharedPreferences.
                     locationResultHelper.saveResults()
-                    // Show notification with the location data.
                     locationResultHelper.showNotification()
                     Log.i(TAG, LocationResultHelper.getSavedLocationResult(this))
                 }
@@ -30,8 +27,7 @@ class LocationUpdatesIntentService : IntentService(TAG) {
 
     companion object {
 
-        internal val ACTION_PROCESS_UPDATES =
-            "com.smart.hero.Utils.action" + ".PROCESS_UPDATES"
+        internal val ACTION_PROCESS_UPDATES = "com.smart.hero.Utils.action" + ".PROCESS_UPDATES"
         private val TAG = LocationUpdatesIntentService::class.java.simpleName
     }
-}// Name the worker thread.
+}

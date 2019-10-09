@@ -22,17 +22,20 @@ class HeroMessagingService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
-        Log.d(TAG, "From: ${remoteMessage?.from}")
+        Log.wtf(TAG, "From: ${remoteMessage?.from}")
         remoteMessage?.data?.isNotEmpty()?.let {
-            Log.d(TAG, "Message data payload: " + remoteMessage.data)
+            Log.wtf(TAG, "Message data payload: " + remoteMessage.data)
         }
         remoteMessage?.data?.let {
+            /*it.forEach{
+                Log.wtf(it.key, it.key)
+            }*/
             sendNotification( it["title"]!!, it["body"]!!)
         }
     }
 
     override fun onNewToken(token: String?) {
-        Log.d(TAG, "Refreshed token: $token")
+        Log.wtf(TAG, "Refreshed token: $token")
         FirebaseMessaging.getInstance().subscribeToTopic(getString(R.string.default_notification_channel_id))
     }
 

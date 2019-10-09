@@ -34,6 +34,7 @@ import com.smart.hero.Utils.Utils
 import kotlinx.android.synthetic.main.activity_registro.*
 import org.json.JSONException
 import org.json.JSONObject
+import org.pcc.webviewOverlay.WebViewOverlay
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,10 +48,13 @@ class RegistroActivity : AppCompatActivity() {
     private val REQUEST_IMAGE_CAPTURE = 1356
     private val ACCOUNTKIT_REQUEST_CODE = 8553
 
+    private lateinit var webViewOverlay: WebViewOverlay
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
         prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        webViewOverlay = WebViewOverlay(this)
     }
 
     private fun getAge(birthDate: Date, currentDate: Date): Int {
@@ -79,6 +83,12 @@ class RegistroActivity : AppCompatActivity() {
         dialog.show(supportFragmentManager, "tag")
     }
 
+    fun goToTerms(view: View) {
+        if (!NetworkUtils.isConnected(this@RegistroActivity)) {
+            Toast.makeText(this@RegistroActivity, R.string.error_internet, Toast.LENGTH_LONG).show()
+        } else webViewOverlay.loadWebViewOverlay(Utils.URL_TERMS, null)
+    }
+
     fun attemptSave(view: View) {
         // Reset errors.
         editCedula.error = null
@@ -101,6 +111,11 @@ class RegistroActivity : AppCompatActivity() {
 
         var cancel = false
         var focusView: View? = null
+
+        if (!checkBox.isChecked) {
+            Toast.makeText(this@RegistroActivity, R.string.error_terms, Toast.LENGTH_LONG).show()
+            return
+        }
         if (email.isEmpty()) {
             editEmail.error = getString(R.string.error_field_required)
             focusView = editEmail
