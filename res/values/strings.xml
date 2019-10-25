@@ -23,6 +23,7 @@
     <string name="menu_recorrido">Recorrido Seguro</string>
     <string name="menu_shared">Recorridos Compartidos</string>
     <string name="menu_settings">Configuración</string>
+    <string name="menu_historial">Mis Recorridos</string>
 
     <string name="error_general">Ha ocurrido un error inesperado.</string>
     <string name="error_location">Ha ocurrido un error al obtener su ubicación. Asegúrese de haber activado la geolocalización.</string>

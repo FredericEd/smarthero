@@ -24,9 +24,9 @@
             android:id="@+id/nav_shared"
             android:icon="@drawable/ic_menu_share"
             android:title="@string/menu_shared"/>
-        <!--<item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_settings"/>-->
+        <item
+            android:id="@+id/nav_historial"
+            android:icon="@drawable/ic_historial"
+            android:title="@string/menu_historial"/>
     </group>
 </menu>

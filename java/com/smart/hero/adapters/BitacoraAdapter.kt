@@ -16,14 +16,14 @@ import com.smart.hero.data.model.User
 import com.squareup.picasso.Picasso
 import java.lang.Exception
 
-class BitacoraAdapter(private val UIObserver: BitacorasUIObserver, private val mContext: Context, private val list: List<JsonObject>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BitacoraAdapter(private val UIObserver: BitacorasUIObserver, private val mContext: Context, private val list: List<JsonObject>, private val historial: Boolean = false) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     init {
         setHasStableIds(true)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return BitacoraHolder(UIObserver, LayoutInflater.from(mContext).inflate(R.layout.item_bitacora, parent, false))
+        return BitacoraHolder(UIObserver, LayoutInflater.from(mContext).inflate(if (historial) R.layout.item_bitacora2 else R.layout.item_bitacora, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -32,7 +32,7 @@ class BitacoraAdapter(private val UIObserver: BitacorasUIObserver, private val m
 
     override fun onBindViewHolder(genericHolder: RecyclerView.ViewHolder, position: Int) {
         val holder = genericHolder as BitacoraHolder
-        holder.fillFields(list[position], position, mContext)
+        holder.fillFields(list[position], position, mContext, historial)
     }
 
     override fun getItemId(position: Int): Long {
@@ -50,15 +50,22 @@ class BitacoraHolder(val UIObserver: BitacorasUIObserver, val view: View): Recyc
     private val textNombre: TextView = view.findViewById(R.id.textNombre)
     private val textFecha: TextView = view.findViewById(R.id.textFecha)
     private val textEstado: TextView = view.findViewById(R.id.textEstado)
-    private val imgIcon: ImageView = view.findViewById(R.id.imgIcon)
+    private val imgIcon: ImageView? = view.findViewById(R.id.imgIcon)
 
-    fun fillFields(bitacora: JsonObject, position: Int, mContext: Context){
-        val usuario = Klaxon().parseFromJsonObject<User>(bitacora.obj("usuario")!!)!!
-        textNombre.text = "${usuario.nombre1} ${usuario.apellido1} ${usuario.apellido2}"
+    fun fillFields(bitacora: JsonObject, position: Int, mContext: Context, historial: Boolean){
+        textNombre.text = "Bitácora ${position + 1}"
         textFecha.text = bitacora.string("fecha_inicio")
         textEstado.text = if (bitacora.string("fecha_fin") == "") "En curso" else "Finalizado"
-        if (usuario.imagen.isNotEmpty())
-            Picasso.get().load(Utils.URL_MEDIA + usuario.imagen).error(R.drawable.men).placeholder(R.drawable.men).noFade().into(imgIcon)
+        if (historial) {
+
+        } else {
+            val usuario = Klaxon().parseFromJsonObject<User>(bitacora.obj("usuario")!!)!!
+            textNombre.text = "${usuario.nombre1} ${usuario.apellido1} ${usuario.apellido2}"
+            if ( usuario.imagen.isNotEmpty())
+                Picasso.get().load(Utils.URL_MEDIA + usuario.imagen).error(R.drawable.men).placeholder(
+                    R.drawable.men
+                ).noFade().into(imgIcon)
+        }
         view.setOnClickListener{
             UIObserver.onElementClicked(bitacora)
         }

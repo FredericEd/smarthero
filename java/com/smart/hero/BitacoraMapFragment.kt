@@ -27,10 +27,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.Polyline
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -85,7 +82,8 @@ class BitacoraMapFragment: Fragment(), OnMapReadyCallback {
         childFragmentManager.beginTransaction().replace(R.id.map, mapFragment as Fragment).commit()
         mapFragment!!.getMapAsync(this)
         btnActualizar.setOnClickListener {
-            saveRegistro(id_bitacora)
+            if (arguments!!.getString("tipo") == "1") saveRegistro(id_bitacora)
+            else loadBitacora(id_bitacora)
         }
         btnSubmit.setOnClickListener {
             val builder = AlertDialog.Builder(context)
@@ -169,7 +167,8 @@ class BitacoraMapFragment: Fragment(), OnMapReadyCallback {
         if (registros.size > 1) {
             mMap.addMarker(MarkerOptions().position(LatLng(
                 registros[registros.lastIndex].string("latitud")!!.toDouble(),
-                registros[registros.lastIndex].string("longitud")!!.toDouble())).title(getString(R.string.recorrido_label_final) + " (" + registros[registros.lastIndex].string("fecha") + ")"))
+                registros[registros.lastIndex].string("longitud")!!.toDouble())).title(getString(R.string.recorrido_label_final) + " (" + registros[registros.lastIndex].string("fecha") + ")")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_user)))
         }
         lineOptions.addAll(points)
         lineOptions.width(10.toFloat())
@@ -317,6 +316,24 @@ class BitacoraMapFragment: Fragment(), OnMapReadyCallback {
             }
             stringRequest.retryPolicy = DefaultRetryPolicy(180000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
             queue.add(stringRequest)
+        }
+    }
+
+    fun onBackPressed() {
+        when(arguments!!.getString("tipo")) {
+            "1" -> {
+                val intent = activity!!.intent
+                activity!!.finish()
+                activity!!.startActivity(intent)
+            }
+            "2" -> {
+                val fragment = BitacorasListaFragment()
+                fragmentManager!!.beginTransaction().replace(R.id.frame_container, fragment).commit()
+            }
+            "3" -> {
+                val fragment = BitacorasHistorialFragment()
+                fragmentManager!!.beginTransaction().replace(R.id.frame_container, fragment).commit()
+            }
         }
     }
 }

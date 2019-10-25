@@ -217,6 +217,7 @@ class MapFragment: Fragment(), OnMapReadyCallback {
                     Log.e("respuesta", response)
                     val json: JsonObject = Parser.default().parse(StringBuilder(response)) as JsonObject
                     Toast.makeText(activity!!.applicationContext, json.string("message"), Toast.LENGTH_LONG).show()
+                    getDeviceLocation()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

@@ -25,6 +25,7 @@ import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -101,7 +102,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun requestLocationUpdates() {
-       /* try {
+        try {
             Log.i(MainActivity::class.java.simpleName, "Starting location updates")
             LocationRequestHelper.setRequesting(this, true)
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, getPendingIntent())
@@ -111,17 +112,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         } catch (e: SecurityException) {
             LocationRequestHelper.setRequesting(this, false)
             e.printStackTrace()
-        }*/
+        }
     }
 
     fun removeLocationUpdates() {
-       /* Log.i(MainActivity::class.java.simpleName, "Ending location updates")
+        Log.i(MainActivity::class.java.simpleName, "Ending location updates")
         LocationRequestHelper.setRequesting(this, false)
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, getPendingIntent())
         val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         mNotificationManager.cancelAll()
 
-        WorkManager.getInstance().cancelAllWorkByTag("LOCATION_WORK_TAG")*/
+        WorkManager.getInstance().cancelAllWorkByTag("LOCATION_WORK_TAG")
     }
 
     override fun onConnectionSuspended(i: Int) {
@@ -206,6 +207,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             } else if (anonymousFragment is ConsultaFragment) {
                 val fragment = anonymousFragment as ConsultaFragment
                 fragment.onBackPressed()
+            } else if (anonymousFragment is BitacoraMapFragment) {
+                val fragment = anonymousFragment as BitacoraMapFragment
+                fragment.onBackPressed()
             } else {
                 val intent = intent
                 finish()
@@ -257,6 +261,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_profile -> displayView(2)
             R.id.nav_recorrido -> displayView(3)
             R.id.nav_shared -> displayView(4)
+            R.id.nav_historial -> displayView(5)
             /*R.id.nav_settings -> displayView(5)*/
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -289,6 +294,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 fragment = ContactosFragment()
             }
             4 -> fragment = BitacorasListaFragment()
+            5 -> fragment = BitacorasHistorialFragment()
         }
         if (fragment != null) {
             fragment!!.arguments = bundl
